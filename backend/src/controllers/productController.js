@@ -6,6 +6,12 @@ import {
   deleteProduct,
 } from '../models/productModel.js';
 
+/**
+ * Controlador para obtener todos los productos.
+ * Responde con la lista de productos en formato JSON.
+ * @param {Object} req - Objeto de petición Express.
+ * @param {Object} res - Objeto de respuesta Express.
+ */
 export const getProducts = async (req, res) => {
   try {
     const products = await getAllProducts();
@@ -15,6 +21,12 @@ export const getProducts = async (req, res) => {
   }
 };
 
+/**
+ * Controlador para obtener un único producto por su ID.
+ * Responde con el producto o con un error 404 si no se encuentra.
+ * @param {Object} req - Objeto de petición Express (debe contener req.params.id).
+ * @param {Object} res - Objeto de respuesta Express.
+ */
 export const getProduct = async (req, res) => {
   try {
     const product = await getProductById(req.params.id);
@@ -27,6 +39,12 @@ export const getProduct = async (req, res) => {
   }
 };
 
+/**
+ * Controlador para crear un nuevo producto.
+ * Valida que 'nombre' y 'stock' estén presentes en el cuerpo de la petición.
+ * @param {Object} req - Objeto de petición Express (contiene los datos del producto en req.body).
+ * @param {Object} res - Objeto de respuesta Express.
+ */
 export const createProductHandler = async (req, res) => {
   const { nombre, descripcion, costo, precio, stock } = req.body;
 
@@ -42,6 +60,12 @@ export const createProductHandler = async (req, res) => {
   }
 };
 
+/**
+ * Controlador para actualizar un producto existente por su ID.
+ * Valida que se envíen campos para actualizar en el cuerpo de la petición.
+ * @param {Object} req - Objeto de petición Express (contiene id en req.params y datos en req.body).
+ * @param {Object} res - Objeto de respuesta Express.
+ */
 export const updateProductHandler = async (req, res) => {
   if (Object.keys(req.body).length === 0) {
     return res.status(400).json({ message: 'No se enviaron campos para actualizar' });
@@ -58,6 +82,11 @@ export const updateProductHandler = async (req, res) => {
   }
 };
 
+/**
+ * Controlador para eliminar un producto existente por su ID.
+ * @param {Object} req - Objeto de petición Express (contiene req.params.id).
+ * @param {Object} res - Objeto de respuesta Express.
+ */
 export const deleteProductHandler = async (req, res) => {
   try {
     const affected = await deleteProduct(req.params.id);

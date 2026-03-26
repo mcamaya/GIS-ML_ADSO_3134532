@@ -4,6 +4,7 @@ import 'dotenv/config';
 
 import authRoutes from './src/routes/authRoutes.js';
 import productRoutes from './src/routes/productRoutes.js';
+import kitRoutes from './src/routes/kitRoutes.js';
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(json());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/kits', kitRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Servidor funcionando' });
