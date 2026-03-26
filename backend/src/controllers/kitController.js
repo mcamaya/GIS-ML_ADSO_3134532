@@ -9,6 +9,7 @@ import {
   removeProductFromKit,
   deleteKit,
 } from '../models/kitModel.js';
+import { registrarLog } from '../services/logService.js';
 
 /**
  * Controlador para obtener todos los kits.
@@ -66,7 +67,7 @@ export const createKitHandler = async (req, res) => {
       }
       await recalculateKitStock(kitId);
     }
-
+await registrarLog(req.user.userId, `Kit creado: ID ${kitId} - ${nombre}`);
     res.status(201).json({ message: 'Kit creado', kitId });
   } catch (error) {
     res.status(500).json({ message: 'Error al crear kit', error: error.message });
@@ -89,7 +90,8 @@ export const updateKitHandler = async (req, res) => {
     if (!affected) {
       return res.status(404).json({ message: 'Kit no encontrado' });
     }
-    res.json({ message: 'Kit actualizado' });
+    await registrarLog(req.user.userId, `Kit actualizado: ID ${req.params.id}`);
+    res.json({ message: 'Kit actualizado' });   
   } catch (error) {
     res.status(500).json({ message: 'Error al actualizar kit', error: error.message });
   }
@@ -111,6 +113,7 @@ export const addProductToKitHandler = async (req, res) => {
   try {
     await addProductToKit(req.params.id, productoId, cantidad);
     const stock = await recalculateKitStock(req.params.id);
+    await registrarLog(req.user.userId, `Producto ID ${productoId} agregado al kit ID ${req.params.id}`);
     res.json({ message: 'Producto agregado al kit', stockCalculado: stock });
   } catch (error) {
     res.status(500).json({ message: 'Error al agregar producto al kit', error: error.message });
@@ -130,6 +133,7 @@ export const removeProductFromKitHandler = async (req, res) => {
       return res.status(404).json({ message: 'Producto no encontrado en el kit' });
     }
     const stock = await recalculateKitStock(req.params.id);
+    await registrarLog(req.user.userId, `Producto ID ${req.params.productoId} eliminado del kit ID ${req.params.id}`);
     res.json({ message: 'Producto eliminado del kit', stockCalculado: stock });
   } catch (error) {
     res.status(500).json({ message: 'Error al eliminar producto del kit', error: error.message });
@@ -147,6 +151,7 @@ export const deleteKitHandler = async (req, res) => {
     if (!affected) {
       return res.status(404).json({ message: 'Kit no encontrado' });
     }
+    await registrarLog(req.user.userId, `Kit eliminado: ID ${req.params.id}`);
     res.json({ message: 'Kit eliminado' });
   } catch (error) {
     res.status(500).json({ message: 'Error al eliminar kit', error: error.message });
