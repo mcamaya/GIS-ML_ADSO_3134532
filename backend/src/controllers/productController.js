@@ -5,6 +5,7 @@ import {
   updateProduct,
   deleteProduct,
 } from '../models/productModel.js';
+import { registrarLog } from '../services/logService.js';
 
 /**
  * Controlador para obtener todos los productos.
@@ -54,6 +55,7 @@ export const createProductHandler = async (req, res) => {
 
   try {
     const productId = await createProduct(nombre, descripcion, costo, precio, stock);
+    await registrarLog(req.user.userId, `Producto creado: ID ${productId} - ${nombre}`);
     res.status(201).json({ message: 'Producto creado', productId });
   } catch (error) {
     res.status(500).json({ message: 'Error al crear producto', error: error.message });
@@ -76,6 +78,7 @@ export const updateProductHandler = async (req, res) => {
     if (!affected) {
       return res.status(404).json({ message: 'Producto no encontrado' });
     }
+    await registrarLog(req.user.userId, `Producto actualizado: ID ${req.params.id}`);
     res.json({ message: 'Producto actualizado' });
   } catch (error) {
     res.status(500).json({ message: 'Error al actualizar producto', error: error.message });
@@ -93,6 +96,7 @@ export const deleteProductHandler = async (req, res) => {
     if (!affected) {
       return res.status(404).json({ message: 'Producto no encontrado' });
     }
+    await registrarLog(req.user.userId, `Producto eliminado: ID ${req.params.id}`);
     res.json({ message: 'Producto eliminado' });
   } catch (error) {
     res.status(500).json({ message: 'Error al eliminar producto', error: error.message });
