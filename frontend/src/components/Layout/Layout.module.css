@@ -1,0 +1,105 @@
+.wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 220px;
+  min-width: 220px;
+  background-color: var(--color-primary);
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-xl) 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md) var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+}
+
+.logoImg {
+  width: 100%;
+  object-fit: contain;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  flex: 1;
+  padding: 0 var(--spacing-md);
+}
+
+.navItem {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  color: var(--color-primary-light);
+  font-weight: 500;
+  font-size: var(--font-size-sm);
+  transition: background-color 0.2s, color 0.2s;
+  text-decoration: none;
+}
+
+.navItem:hover {
+  background-color: var(--color-primary-dark);
+  color: var(--color-white);
+  text-decoration: none;
+}
+
+.navItemActive {
+  background-color: var(--color-white);
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.navItemActive:hover {
+  background-color: var(--color-white);
+  color: var(--color-primary);
+}
+
+.footer {
+  padding: var(--spacing-md) var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  border-top: 1px solid var(--color-primary-dark);
+}
+
+.userName {
+  font-size: var(--font-size-sm);
+  color: var(--color-primary-light);
+  font-weight: 600;
+  text-align: center;
+}
+
+.logoutButton {
+  background: transparent;
+  border: 1px solid var(--color-primary-light);
+  color: var(--color-primary-light);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.logoutButton:hover {
+  background-color: var(--color-white);
+  color: var(--color-primary);
+  border-color: var(--color-white);
+}
+
+.main {
+  margin-left: 220px;
+  flex: 1;
+  padding: var(--spacing-2xl);
+  background-color: var(--color-bg);
+  min-height: 100vh;
+}
